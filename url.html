@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Phishing URL Detection</title>
+  <link rel="stylesheet" href="url.css" />
+</head>
+<body>
+
+  <div class="top-controls">
+      <button onclick="window.location.href='/home/home.html'" title="Back to Home">←</button>
+  </div>
+
+  <!-- 🔹 Video Header -->
+  <div class="video-header">
+    <video autoplay muted loop playsinline>
+      <source src="playback1.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <div class="header-overlay">
+      <h1>Phishing URL Detection</h1>
+      <p>Detect threats before they harm you</p>
+    </div>
+  </div>
+
+  <!-- 🔍 Search Container -->
+  <div class="search-container">
+    <h2>Enter URL to Verify</h2>
+    <input type="text" id="urlInput" placeholder="https://example.com" />
+    <button id="verifyBtn">Verify</button>
+    <div id="loader" class="loader"></div>
+  </div>
+
+  <!-- 🧠 Tips Section -->
+  <section class="tips-section">
+    <h2>Phishing Awareness Tips</h2>
+
+    <div class="tips-row">
+      <div class="tip-card" onclick="toggleCard(this)" data-delay="0s">
+        <div class="tip-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>URL Analysis</h3>
+        <p class="summary">Preview short URLs before clicking.</p>
+        <div class="tip-details">
+          <p>Phishing links are often hidden behind short URLs. Use preview tools to expand and inspect them.</p>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleCard(this)" data-delay="0.2s">
+        <div class="tip-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2.45801 12C3.73201 7.943 7.52301 5 12 5C16.478 5 20.268 7.943 21.542 12C20.268 16.057 16.478 19 12 19C7.52301 19 3.73201 16.057 2.45801 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Domain Verification</h3>
+        <p class="summary">Check for small spelling errors.</p>
+        <div class="tip-details">
+          <p>Phishing sites mimic real domains. Watch for things like paypaI.com (with an I instead of L).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacer-block"></div>
+
+    <div class="tips-row">
+      <div class="tip-card" onclick="toggleCard(this)" data-delay="0.4s">
+        <div class="tip-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Email Security</h3>
+        <p class="summary">Be cautious with urgent action emails.</p>
+        <div class="tip-details">
+          <p>Emails pressuring you to act fast are often phishing. Stop, verify, and check sender details.</p>
+        </div>
+      </div>
+
+      <div class="tip-card" onclick="toggleCard(this)" data-delay="0.6s">
+        <div class="tip-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Browser Protection</h3>
+        <p class="summary">Browser tools can warn you.</p>
+        <div class="tip-details">
+          <p>Install browser add-ons that scan links in real-time to prevent phishing attempts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 📊 Result Section -->
+  <section class="result-section" id="resultSection">
+    <h2>Verification Result</h2>
+    <div class="result-container">
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="result-status" id="resultStatus">
+        <h3>Enter a URL to verify</h3>
+        <p>Click the verify button above to check if a URL is safe</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+  function toggleCard(card) {
+    card.classList.toggle('active');
+  }
+
+  // Create a new Intersection Observer for scroll animations
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Add a delay based on the card's position
+        entry.target.style.setProperty('--scroll-delay', index);
+        entry.target.classList.add('show');
+        entry.target.classList.remove('hide');
+      } else {
+        // When card goes out of view, add hide class
+        entry.target.classList.add('hide');
+      }
+    });
+  }, {
+    threshold: 0.2, // Trigger when 20% of the element is visible
+    rootMargin: '0px'
+  });
+
+  // Observe all tip cards for scroll animations
+  document.querySelectorAll('.tip-card').forEach(card => {
+    scrollObserver.observe(card);
+  });
+
+  document.getElementById("verifyBtn").addEventListener("click", () => {
+    const input = document.getElementById("urlInput").value.trim();
+    const loader = document.getElementById("loader");
+    const progressBar = document.getElementById("progressBar");
+    const resultStatus = document.getElementById("resultStatus");
+    const resultSection = document.getElementById("resultSection");
+
+    if (!input) {
+      resultStatus.innerHTML = "<h3>⚠️ Please enter a URL</h3><p>Enter a URL to verify its safety</p>";
+      resultStatus.className = "result-status";
+      resultSection.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    loader.style.display = "inline-block";
+    resultStatus.innerHTML = "<h3>Verifying...</h3><p>Please wait while we check the URL</p>";
+    resultStatus.className = "result-status";
+    resultSection.scrollIntoView({ behavior: "smooth" });
+
+    fetch("/predict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ url: input })
+    })
+    .then(response => response.json())
+    .then(data => {
+      loader.style.display = "none";
+
+      if (data.result === "Phishing") {
+        // Update progress bar and result status
+        progressBar.style.width = "100%";
+        progressBar.classList.add("unsafe");
+        resultStatus.innerHTML = "<h3>PHISHING</h3><p>UNSAFE!!!</p>";
+        resultStatus.className = "result-status unsafe";
+      } else if (data.result === "Legitimate") {
+        // Update progress bar and result status
+        progressBar.style.width = "100%";
+        progressBar.classList.remove("unsafe");
+        resultStatus.innerHTML = "<h3>SAFE</h3><p>This URL has been verified as legitimate</p>";
+        resultStatus.className = "result-status safe";
+      } else {
+        resultStatus.innerHTML = "<h3>⚠️ " + data.result + "</h3><p>Please try again</p>";
+        resultStatus.className = "result-status";
+      }
+    })
+    .catch(error => {
+      loader.style.display = "none";
+      resultStatus.innerHTML = "<h3>❌ Error</h3><p>Error checking the URL. Please try again.</p>";
+      resultStatus.className = "result-status";
+      console.error("Prediction error:", error);
+    });
+  });
+  </script>
+</body>
+</html>
