@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Phishing Detector</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/home/style.css">
+</head>
+<body>
+    <div class="header">
+        <h2 class="logo">Phishing Detector</h2>
+        <nav class="menu">
+            <ul>
+                <li><a href="#home">HOME</a></li>
+                <li><a href="../url">URL</a></li>
+                <li><a href="http://localhost:5001/" target="_blank">EMAIL</a></li>
+                <li><a href="/home/about.html">ABOUT</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src="/home/playback.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="search-container">
+       <input class="srch" id="searchInput" type="text" placeholder="Search the web...">
+       <button class="btn" onclick="googleCSESearch()">Search</button>
+    </div>
+    
+    <!-- Google CSE JavaScript (replace CX with your own) -->
+    <script async src="https://cse.google.com/cse.js?cx=30249a16b85f84f4e"></script>
+    <div class="gcse-searchresults-only" data-queryParameterName="q"></div>
+
+    <section id="home">
+        <div class="content">
+            <h1>Phishing <br><span>URL & Email</span> <br>Checker</h1>
+            <p>Detect and prevent online phishing threats with our advanced URL analysis.
+                <br>Instantly verify suspicious links to protect your data and stay safe from cyber attacks.
+            </p> 
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-content">
+            <h2>About Phishing Detector</h2>
+            <p>Our phishing detection system is designed to help users identify and avoid malicious links and emails. Stay safe from cyber threats with real-time analysis and security recommendations.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Phishing Detector. All Rights Reserved.</p>
+    </footer>
+
+    <div class="chatbot-container">
+        <button class="chat-button" onclick="toggleChat()"></button>
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">Chatbot
+                <button class="close-button" onclick="toggleChat()">&times;</button>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <div class="chat-message bot-message">Welcome! How can I help you?</div>
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="chatInput" placeholder="Type a message...">
+                <button onclick="sendMessage()"></button>
+            </div>
+        </div>
+    </div>
+    <script src="/home/script.js"></script>
+
+</body>
+</html>
