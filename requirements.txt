@@ -1,0 +1,15 @@
+Python 3.8+
+
+Flask
+
+Scikit-learn
+
+XGBoost
+
+pandas, numpy
+
+tldextract
+
+TensorFlow/Keras (for LSTM, optional)
+
+joblib or pickle
