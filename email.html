@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Phishing Detector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="email.css">
+</head>
+<body>
+
+  <div class="top-controls">
+      <button onclick="window.location.href='http://localhost:5000/'" title="Back to Home">←</button>
+
+  </div>
+
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar"></div>
+    </div>
+
+    <div class="particles" id="particles"></div>
+
+    <div class="back-to-top" id="backToTop"></div>
+
+    <div class="header-video">
+        <video autoplay muted loop playsinline id="headerVideo">
+            <source src="playback2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="header-text">Phishing Email Detection</div>
+        <div class="header-subtitle">Protect yourself from malicious email attacks with our advanced AI-powered detection system</div>
+    </div>
+
+    <div class="container">
+        <h2>Enter or Upload Email for Analysis</h2>
+
+        <textarea id="emailText" placeholder="Paste suspicious email content here..."></textarea>
+
+        <button onclick="predict()" id="checkButton">
+            <span>Verify</span>
+        </button>
+        
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>Analyzing email...</p>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <h2 class="section-title">Email Security Awareness</h2>
+    <div class="info-sections">
+        <div class="info-card" onclick="showModal('phishing-signs')">
+            <h3>Common Phishing Signs</h3>
+        </div>
+
+        <div class="info-card" onclick="showModal('protection-tips')">
+            <h3>Protection Tips</h3>
+        </div>
+
+        <div class="info-card" onclick="showModal('detector-works')">
+            <h3>How Our Detector Works</h3>
+        </div>
+
+        <div class="info-card" onclick="showModal('best-practices')">
+            <h3>Best Practices</h3>
+        </div>
+
+        <div class="info-card" onclick="showModal('types-phishing')">
+            <h3>Types of Phishing</h3>
+        </div>
+
+        <div class="info-card" onclick="showModal('response-actions')">
+            <h3>Response Actions</h3>
+        </div>
+    </div>
+
+    <!-- Modal Templates -->
+    <div id="phishing-signs-modal" class="modal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeModal('phishing-signs')"></div>
+            <div class="modal-header">
+                <h2>Common Phishing Signs</h2>
+            </div>
+            <div class="modal-content-wrapper">
+                <div class="modal-section">
+                    <h3>Key Indicators</h3>
+                    <ul>
+                        <li><strong>Urgent or Threatening Language:</strong> Messages that create a sense of urgency or fear to pressure you into acting quickly.</li>
+                        <li><strong>Requests for Personal Information:</strong> Legitimate organizations rarely ask for sensitive information via email.</li>
+                        <li><strong>Suspicious Sender Addresses:</strong> Check for misspelled domain names or unusual email addresses.</li>
+                        <li><strong>Poor Grammar and Spelling:</strong> Professional organizations typically have well-written communications.</li>
+                        <li><strong>Generic Greetings:</strong> Phishing emails often use generic terms like "Dear Customer" instead of your name.</li>
+                        <li><strong>Unusual Attachments or Links:</strong> Be wary of unexpected attachments or links, especially from unknown senders.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="protection-tips-modal" class="modal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeModal('protection-tips')"></div>
+            <div class="modal-header">
+                <h2>Protection Tips</h2>
+            </div>
+            <div class="modal-content-wrapper">
+                <div class="modal-section">
+                    <h3>Essential Security Measures</h3>
+                    <ul>
+                        <li><strong>Password Security:</strong> Never share passwords or sensitive data via email. Use a password manager for secure storage.</li>
+                        <li><strong>Sender Verification:</strong> Always verify the sender's identity before responding to requests for information.</li>
+                        <li><strong>URL Safety:</strong> Hover over links to check their destination before clicking. Look for HTTPS and legitimate domains.</li>
+                        <li><strong>Strong Passwords:</strong> Use complex, unique passwords for each account and change them regularly.</li>
+                        <li><strong>Two-Factor Authentication:</strong> Enable 2FA wherever possible for an extra layer of security.</li>
+                        <li><strong>System Updates:</strong> Keep all software and systems updated to patch security vulnerabilities.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="detector-works-modal" class="modal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeModal('detector-works')"></div>
+            <div class="modal-header">
+                <h2>How Our Detector Works</h2>
+            </div>
+            <div class="modal-content-wrapper">
+                <div class="modal-section">
+                    <h3>Analysis Methods</h3>
+                    <ul>
+                        <li><strong>Content Analysis:</strong> Scans for suspicious patterns, keywords, and language structures commonly used in phishing.</li>
+                        <li><strong>Sender Verification:</strong> Checks sender reputation and domain authenticity using advanced algorithms.</li>
+                        <li><strong>URL Analysis:</strong> Examines links for known malicious domains and suspicious redirects.</li>
+                        <li><strong>Language Processing:</strong> Detects anomalies in language patterns and formatting that indicate phishing.</li>
+                        <li><strong>Threat Intelligence:</strong> Cross-references with known phishing indicators and threat databases.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="best-practices-modal" class="modal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeModal('best-practices')"></div>
+            <div class="modal-header">
+                <h2>Best Practices</h2>
+            </div>
+            <div class="modal-content-wrapper">
+                <div class="modal-section">
+                    <h3>Security Guidelines</h3>
+                    <ul>
+                        <li><strong>Software Updates:</strong> Keep all security software and systems updated to protect against known vulnerabilities.</li>
+                        <li><strong>Attachment Safety:</strong> Be extremely cautious with email attachments, especially from unknown senders.</li>
+                        <li><strong>Reporting:</strong> Report suspicious emails to your IT department or security team immediately.</li>
+                        <li><strong>Email Security:</strong> Use secure email gateways and spam filters to block malicious content.</li>
+                        <li><strong>Education:</strong> Stay informed about the latest phishing techniques and share knowledge with others.</li>
+                        <li><strong>Data Backup:</strong> Maintain regular backups of important data to prevent loss in case of security incidents.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="types-phishing-modal" class="modal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeModal('types-phishing')"></div>
+            <div class="modal-header">
+                <h2>Types of Phishing</h2>
+            </div>
+            <div class="modal-content-wrapper">
+                <div class="modal-section">
+                    <h3>Common Attack Methods</h3>
+                    <ul>
+                        <li><strong>Spear Phishing:</strong> Highly targeted attacks aimed at specific individuals or organizations.</li>
+                        <li><strong>Whaling:</strong> Attacks targeting high-profile individuals like CEOs or executives.</li>
+                        <li><strong>Clone Phishing:</strong> Duplicates of legitimate emails with malicious content.</li>
+                        <li><strong>Vishing:</strong> Voice-based phishing attempts via phone calls.</li>
+                        <li><strong>Smishing:</strong> Phishing attacks conducted through SMS messages.</li>
+                        <li><strong>Social Media Phishing:</strong> Attacks carried out through social media platforms.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="response-actions-modal" class="modal">
+        <div class="modal-content">
+            <div class="close-modal" onclick="closeModal('response-actions')"></div>
+            <div class="modal-header">
+                <h2>Response Actions</h2>
+            </div>
+            <div class="modal-content-wrapper">
+                <div class="modal-section">
+                    <h3>Immediate Steps</h3>
+                    <ul>
+                        <li><strong>Link Safety:</strong> Do not click on any suspicious links in the email.</li>
+                        <li><strong>Reporting:</strong> Report the phishing attempt to your IT department and relevant authorities.</li>
+                        <li><strong>Password Security:</strong> Change any potentially compromised passwords immediately.</li>
+                        <li><strong>System Scan:</strong> Run a full malware scan on your devices.</li>
+                        <li><strong>Account Monitoring:</strong> Monitor your financial and online accounts for suspicious activity.</li>
+                        <li><strong>Security Updates:</strong> Review and update your security settings across all accounts.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Video error handling
+        const video = document.getElementById('headerVideo');
+        video.addEventListener('error', function() {
+            console.log('Video failed to load, using gradient background');
+            this.style.display = 'none';
+        });
+
+        // File drag and drop handling
+        const dropZone = document.querySelector('.file-input-container');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            dropZone.classList.add('highlight');
+        }
+
+        function unhighlight(e) {
+            dropZone.classList.remove('highlight');
+        }
+
+        dropZone.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type === "text/plain") {
+                    loadFile({ target: { files: [file] } });
+                } else {
+                    alert("Please upload a valid .txt file.");
+                }
+            }
+        }
+
+        function loadFile(event) {
+            const file = event.target.files[0];
+            if (file && file.type === "text/plain") {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("emailText").value = e.target.result;
+                };
+                reader.readAsText(file);
+            } else {
+                alert("Please upload a valid .txt file.");
+            }
+        }
+
+        async function predict() {
+            const email = document.getElementById("emailText").value;
+            if (!email.trim()) {
+                alert("Please enter or upload an email to analyze.");
+                return;
+            }
+
+            const loading = document.getElementById("loading");
+            const result = document.getElementById("result");
+            const button = document.getElementById("checkButton");
+
+            loading.style.display = "block";
+            result.className = "";
+            result.innerText = "";
+            button.disabled = true;
+
+            try {
+                const response = await fetch("/predict", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+
+                const data = await response.json();
+                const isPhishing = data.prediction === 0;
+                
+                result.className = isPhishing ? "danger" : "success";
+                result.innerHTML = isPhishing 
+                    ? "⚠️ <strong>Phishing Email Detected!</strong><br>This email shows signs of being a phishing attempt."
+                    : "✅ <strong>Safe Email</strong><br>This email appears to be legitimate.";
+            } catch (error) {
+                result.className = "danger";
+                result.innerText = "Error analyzing email. Please try again.";
+                console.error("Error:", error);
+            } finally {
+                loading.style.display = "none";
+                button.disabled = false;
+            }
+        }
+
+        function showModal(modalId) {
+            const modal = document.getElementById(`${modalId}-modal`);
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(`${modalId}-modal`);
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside the content
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.info-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // Scroll progress
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.querySelector('.scroll-progress-bar');
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Initialize particles
+        createParticles();
+
+        // Add hover effect to cards
+        document.querySelectorAll('.info-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add smooth scroll to sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add parallax effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header-video');
+            const scrolled = window.pageYOffset;
+            header.style.transform = `translateY(${scrolled * 0.5}px)`;
+        });
+    </script>
+</body>
+</html>
